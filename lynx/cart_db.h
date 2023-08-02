@@ -14,6 +14,7 @@ static LYNX_DB lynxDB[] = {
 
 
 	// no-intro private 2023-07-21
+   { 0xbb27e6f0, "PONX (World) (Aftermarket) (Unl)", 131072, C256K, 0, 0, 0, 0 },
    { 0x7f8b5efa, "Wyvern Tales (World) (Aftermarket) (Unl)", 524288, C512K, 0, 0, 0, CART_EEPROM_93C46 },
 
 
