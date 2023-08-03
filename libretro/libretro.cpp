@@ -1,3 +1,6 @@
+#include <stdio.h>
+
+
 #include "libretro.h"
 #include "libretro_core_options.h"
 
@@ -631,9 +634,9 @@ static UBYTE* lynx_display_callback(ULONG objref)
    return (UBYTE*)framebuffer;
 }
 
-#include <stdio.h>
 static void lynx_rotate(void)
 {
+	printf("rotate %x %d\n", lynx, lynx_rot);
    if (!lynx)
       return;
 
@@ -732,6 +735,8 @@ static void check_variables(void)
       if (initialized &&
           (lynx_rot != old_lynx_rot))
          lynx_rotation_pending = ROTATION_PENDING_CORE;
+
+	printf("read rotate %x %d %d\n", lynx, lynx_rot, lynx_rotation_pending);
    }
 
 #if defined(FRONTEND_SUPPORTS_XRGB8888)
