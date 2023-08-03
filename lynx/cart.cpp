@@ -51,6 +51,7 @@
 #include "scrc32.h"
 #include "handy.h"
 #include "cart_db.h"
+#include <stdio.h>
 
 CCart::CCart(const UBYTE *gamedata, ULONG gamesize)
 {
@@ -99,6 +100,7 @@ CCart::CCart(const UBYTE *gamedata, ULONG gamesize)
                header.aud_bits = lynxDB[i].audin;
                header.eeprom = lynxDB[i].eeprom;
 
+               printf("Found - %X %X - %d %d %d\n", header.page_size_bank0, header.page_size_bank1, header.rotation, header.aud_bits, header.eeprom );
                break;
             }
             i++;
