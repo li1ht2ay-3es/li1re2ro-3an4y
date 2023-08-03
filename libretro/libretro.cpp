@@ -639,7 +639,14 @@ static void lynx_rotate(void)
       return;
 
    if (lynx_rot == RETRO_LYNX_ROTATE_AUTO)
-      lynx_rot = lynx->CartGetRotate();
+   {
+      switch (lynx->CartGetRotate())
+      {
+         case CART_ROTATE_L: lynx_rot = MIKIE_ROTATE_L; break;
+         case CART_ROTATE_R: lynx_rot = MIKIE_ROTATE_R; break;
+         default: lynx_rot = MIKIE_NO_ROTATE; break;
+      }
+   }
 
    switch (lynx_rot)
    {
