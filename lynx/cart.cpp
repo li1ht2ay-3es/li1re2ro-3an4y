@@ -94,12 +94,7 @@ CCart::CCart(const UBYTE *gamedata, ULONG gamesize)
                header.page_size_bank0 = (lynxDB[i].bank0 ? 1<<(lynxDB[i].bank0-1) : 0) * 0x100;
                header.page_size_bank1 = (lynxDB[i].bank1 ? 1<<(lynxDB[i].bank1-1) : 0) * 0x100;
 
-					switch(lynxDB[i].rotation) {
-					   case 1:  header.rotation = MIKIE_ROTATE_L; break;
-					   case 2:  header.rotation = MIKIE_ROTATE_R; break;
-					   default: header.rotation = MIKIE_NO_ROTATE; break;
-					}
-
+               header.rotation = lynxDB[i].rotation;
                header.aud_bits = lynxDB[i].audin;
                header.eeprom = lynxDB[i].eeprom;
 
