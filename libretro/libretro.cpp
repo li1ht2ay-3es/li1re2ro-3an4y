@@ -631,13 +631,16 @@ static UBYTE* lynx_display_callback(ULONG objref)
    return (UBYTE*)framebuffer;
 }
 
+#include <stdio.h>
 static void lynx_rotate(void)
 {
    if (!lynx)
       return;
 
-   if (lynx_rot == -1)
+   if (lynx_rot == -1) {
+	   printf("rotate = %d\n", lynx->CartGetRotate());
       lynx_rot = lynx->CartGetRotate();
+   }
 
    switch (lynx_rot)
    {
