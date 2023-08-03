@@ -1,6 +1,3 @@
-#include <stdio.h>
-
-
 #include "libretro.h"
 #include "libretro_core_options.h"
 
@@ -29,6 +26,8 @@ static int16_t *soundBuffer = NULL;
 #define RETRO_LYNX_WIDTH  160
 #define RETRO_LYNX_HEIGHT 102
 
+#define RETRO_LYNX_ROTATE_AUTO 255
+
 /* Note: Set 75Hz here to reflect the nominal
  * maximum of the Lynx hardware; actual 'core
  * options' default is 60Hz */
@@ -38,7 +37,7 @@ static ULONG retro_cycles_per_frame = (HANDY_SYSTEM_FREQ / 75);
 static bool retro_refresh_rate_updated = false;
 
 // core options
-static uint8_t lynx_rot         = -1;  // auto-detect
+static uint8_t lynx_rot         = RETRO_LYNX_ROTATE_AUTO;
 static uint8_t lynx_width       = RETRO_LYNX_WIDTH;
 static uint8_t lynx_height      = RETRO_LYNX_HEIGHT;
 static uint8_t lynx_width_next  = RETRO_LYNX_WIDTH;
@@ -636,14 +635,11 @@ static UBYTE* lynx_display_callback(ULONG objref)
 
 static void lynx_rotate(void)
 {
-	printf("rotate %x %d\n", lynx, lynx_rot);
    if (!lynx)
       return;
 
-   if (lynx_rot == -1) {
-	   printf("rotate = %d\n", lynx->CartGetRotate());
+   if (lynx_rot == RETRO_LYNX_ROTATE_AUTO)
       lynx_rot = lynx->CartGetRotate();
-   }
 
    switch (lynx_rot)
    {
@@ -717,7 +713,7 @@ static void check_variables(void)
    lynx_lcd_ghosting_t old_lynx_lcd_ghosting;
 
    old_lynx_rot = lynx_rot;
-   lynx_rot     = -1;
+   lynx_rot     = RETRO_LYNX_ROTATE_AUTO;
    var.key      = "handy_rot";
    var.value    = NULL;
 
@@ -730,13 +726,11 @@ static void check_variables(void)
       else if (strcmp(var.value, "270") == 0)
          lynx_rot = MIKIE_ROTATE_L;
       else if (strcmp(var.value, "Auto") == 0)
-         lynx_rot = -1;
+         lynx_rot = RETRO_LYNX_ROTATE_AUTO;
 
       if (initialized &&
           (lynx_rot != old_lynx_rot))
          lynx_rotation_pending = ROTATION_PENDING_CORE;
-
-	printf("read rotate %x %d %d\n", lynx, lynx_rot, lynx_rotation_pending);
    }
 
 #if defined(FRONTEND_SUPPORTS_XRGB8888)
@@ -877,7 +871,7 @@ void retro_deinit(void)
    libretro_supports_input_bitmasks = false;
    lynx_rotation_pending            = ROTATION_PENDING_NONE;
    lynx_rotation_button_down        = false;
-   lynx_rot                         = -1;
+   lynx_rot                         = RETRO_LYNX_ROTATE_AUTO;
    lynx_width                       = RETRO_LYNX_WIDTH;
    lynx_height                      = RETRO_LYNX_HEIGHT;
    lynx_width_next                  = RETRO_LYNX_WIDTH;
