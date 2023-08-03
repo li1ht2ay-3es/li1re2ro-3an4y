@@ -35,7 +35,7 @@ static ULONG retro_cycles_per_frame = (HANDY_SYSTEM_FREQ / 75);
 static bool retro_refresh_rate_updated = false;
 
 // core options
-static uint8_t lynx_rot         = MIKIE_NO_ROTATE;
+static uint8_t lynx_rot         = -1;  // auto-detect
 static uint8_t lynx_width       = RETRO_LYNX_WIDTH;
 static uint8_t lynx_height      = RETRO_LYNX_HEIGHT;
 static uint8_t lynx_width_next  = RETRO_LYNX_WIDTH;
@@ -636,6 +636,9 @@ static void lynx_rotate(void)
    if (!lynx)
       return;
 
+   if (lynx_rot == -1)
+      lynx_rot = lynx->CartGetRotate();
+
    switch (lynx_rot)
    {
       default:
@@ -708,7 +711,7 @@ static void check_variables(void)
    lynx_lcd_ghosting_t old_lynx_lcd_ghosting;
 
    old_lynx_rot = lynx_rot;
-   lynx_rot     = MIKIE_NO_ROTATE;
+   lynx_rot     = -1;
    var.key      = "handy_rot";
    var.value    = NULL;
 
@@ -721,7 +724,7 @@ static void check_variables(void)
       else if (strcmp(var.value, "270") == 0)
          lynx_rot = MIKIE_ROTATE_L;
       else if (strcmp(var.value, "Auto") == 0)
-         lynx_rot = lynx->CartGetRotate();
+         lynx_rot = -1;
 
       if (initialized &&
           (lynx_rot != old_lynx_rot))
@@ -866,7 +869,7 @@ void retro_deinit(void)
    libretro_supports_input_bitmasks = false;
    lynx_rotation_pending            = ROTATION_PENDING_NONE;
    lynx_rotation_button_down        = false;
-   lynx_rot                         = MIKIE_NO_ROTATE;
+   lynx_rot                         = -1;
    lynx_width                       = RETRO_LYNX_WIDTH;
    lynx_height                      = RETRO_LYNX_HEIGHT;
    lynx_width_next                  = RETRO_LYNX_WIDTH;
