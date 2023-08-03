@@ -642,8 +642,8 @@ static void lynx_rotate(void)
    {
       switch (lynx->CartGetRotate())
       {
-         case CART_ROTATE_L: lynx_rot = MIKIE_ROTATE_L; break;
-         case CART_ROTATE_R: lynx_rot = MIKIE_ROTATE_R; break;
+         case CART_ROTATE_LEFT: lynx_rot = MIKIE_ROTATE_L; break;
+         case CART_ROTATE_RIGHT: lynx_rot = MIKIE_ROTATE_R; break;
          default: lynx_rot = MIKIE_NO_ROTATE; break;
       }
    }
