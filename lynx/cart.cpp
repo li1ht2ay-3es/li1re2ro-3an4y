@@ -51,7 +51,6 @@
 #include "scrc32.h"
 #include "handy.h"
 #include "cart_db.h"
-#include <stdio.h>
 
 CCart::CCart(const UBYTE *gamedata, ULONG gamesize)
 {
@@ -81,8 +80,7 @@ CCart::CCart(const UBYTE *gamedata, ULONG gamesize)
       if(header.magic[0]!='L' || header.magic[1]!='Y' || header.magic[2]!='N' || header.magic[3]!='X' || header.version!=1) {
          unsigned i = 0;
 
-         while(lynxDB[i].crc32 != 0)
-		 {
+         while(lynxDB[i].crc32 != 0) {
             if(lynxDB[i].crc32 == mCRC32 && lynxDB[i].filesize == gamesize) {
                header.magic[0] = 'L';
                header.magic[1] = 'Y';
@@ -96,11 +94,15 @@ CCart::CCart(const UBYTE *gamedata, ULONG gamesize)
                header.page_size_bank0 = (lynxDB[i].bank0 ? 1<<(lynxDB[i].bank0-1) : 0) * 0x100;
                header.page_size_bank1 = (lynxDB[i].bank1 ? 1<<(lynxDB[i].bank1-1) : 0) * 0x100;
 
-               header.rotation = lynxDB[i].rotation;
+					switch(lynxDB[i].rotation) {
+					   case 1:  header.rotation = MIKIE_ROTATE_L; break;
+					   case 2:  header.rotation = MIKIE_ROTATE_R; break;
+					   default: header.rotation = MIKIE_NO_ROTATE; break;
+					}
+
                header.aud_bits = lynxDB[i].audin;
                header.eeprom = lynxDB[i].eeprom;
 
-               printf("Found - %X %X - %d %d %d\n", header.page_size_bank0, header.page_size_bank1, header.rotation, header.aud_bits, header.eeprom );
                break;
             }
             i++;
@@ -115,8 +117,7 @@ CCart::CCart(const UBYTE *gamedata, ULONG gamesize)
         strncpy((char*)&header.cartname,"NO HEADER",32);
         strncpy((char*)&header.manufname,"HANDY",16);
         header.page_size_bank0=gamesize>>8;// Hard workaround...
-      }
-      else if(strcmp((char *)&header.cartname,"NO HEADER")!=0 || strcmp((char *)&header.manufname,"HANDY")!=0) {
+      } else if(strcmp((char *)&header.cartname,"NO HEADER")!=0 || strcmp((char *)&header.manufname,"HANDY")!=0) {
          headersize=sizeof(LYNX_HEADER);
       }
 
