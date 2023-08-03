@@ -720,6 +720,8 @@ static void check_variables(void)
          lynx_rot = MIKIE_ROTATE_R; 
       else if (strcmp(var.value, "270") == 0)
          lynx_rot = MIKIE_ROTATE_L;
+      else if (strcmp(var.value, "Auto") == 0)
+         lynx_rot = lynx->CartGetRotate();
 
       if (initialized &&
           (lynx_rot != old_lynx_rot))
