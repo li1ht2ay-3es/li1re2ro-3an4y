@@ -99,8 +99,8 @@ typedef struct
    ULONG crc32;
    const char *name;
    ULONG filesize;
-	UWORD bank0;
-	UWORD bank1;
+   UWORD bank0;
+   UWORD bank1;
    UBYTE rotation;
    UBYTE audin;
    UBYTE eeprom;
