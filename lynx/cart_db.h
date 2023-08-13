@@ -19,7 +19,7 @@ static LYNX_DB lynxDB[] = {
    // no-intro private
    { 0x9d09bc4c, "8-Bit Slicks (World) (Aftermarket) (Unl)", 524288, C512K, 0, 0, 0, CART_EEPROM_93C46 },
    { 0x427d0e97, "A Bug's Trip Redux (World) (Aftermarket) (Unl)", 524288, C512K, 0, 0, 0, CART_EEPROM_93C46 },
-   { 0xbb27e6f0, "PONX (World) (Aftermarket) (Unl)", 131072, C256K, 0, 0, 0, 0 },
+   { 0xbb27e6f0, "Ponx (World) (Aftermarket) (Unl)", 131072, C256K, 0, 0, 0, 0 },
    { 0xb8879506, "Sky Raider Redux (World) (Aftermarket) (Unl)", 524288, C512K, 0, 0, 0, CART_EEPROM_93C46 },
    { 0xb2fa93d3, "Unnamed (World) (Aftermarket) (Unl)", 524288, C512K, 0, 0, 0, CART_EEPROM_93C46 },
    { 0x50b0575a, "Vikings Saga - Protect The Love (World) (Aftermarket) (Unl)", 524288, C512K, 0, 0, 0, CART_EEPROM_93C46 },
