@@ -87,9 +87,9 @@ void CMikie::BlowOut(void)
    for(loop=0;loop<4096;loop++) mColourMap[loop]=0;
 
    mikbuf.set_sample_rate(HANDY_AUDIO_SAMPLE_FREQ, 60);
-   mikbuf.clock_rate(HANDY_SYSTEM_FREQ / 4);
-   mikbuf.bass_freq(60);
-   miksynth.volume(0.50);
+   mikbuf.clock_rate(HANDY_SYSTEM_FREQ);
+   mikbuf.bass_freq(0);
+   miksynth.volume(1.0);
    miksynth.treble_eq(0);
 	
    Reset();
@@ -1417,7 +1417,7 @@ ULONG CMikie::DisplayEndOfFrame(void)
 
 void	CMikie::AudioEndOfFrame(void)
 {
-   mikbuf.end_frame((gSystemCycleCount - gAudioLastUpdateCycle) / 4);
+   mikbuf.end_frame(gSystemCycleCount - gAudioLastUpdateCycle);
    gAudioBufferPointer = mikbuf.read_samples((blip_sample_t*) gAudioBuffer, HANDY_AUDIO_BUFFER_SIZE / 2);
    gAudioLastUpdateCycle = gSystemCycleCount;
 }
@@ -3579,12 +3579,12 @@ inline void CMikie::UpdateSound(void)
    static int last_rsample = 0;
 
    if(cur_lsample != last_lsample) {
-      miksynth.offset_inline((gSystemCycleCount - gAudioLastUpdateCycle) / 4, cur_lsample - last_lsample, mikbuf.left());
+      miksynth.offset_inline(gSystemCycleCount - gAudioLastUpdateCycle, cur_lsample - last_lsample, mikbuf.left());
       last_lsample = cur_lsample;
    }
 
    if(cur_rsample != last_rsample) {
-      miksynth.offset_inline((gSystemCycleCount - gAudioLastUpdateCycle) / 4, cur_rsample - last_rsample, mikbuf.right());
+      miksynth.offset_inline(gSystemCycleCount - gAudioLastUpdateCycle, cur_rsample - last_rsample, mikbuf.right());
       last_rsample = cur_rsample;
    }
 }

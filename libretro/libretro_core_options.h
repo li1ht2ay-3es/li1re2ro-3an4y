@@ -70,7 +70,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "120", "120Hz" },
          { NULL, NULL },
       },
-      "60"
+      "75"
    },
    {
       "handy_rot",
@@ -82,9 +82,9 @@ struct retro_core_option_v2_definition option_defs_us[] = {
       {
          { "Auto", "Auto" },
          { "None", "Disabled" },
-         { "270",  "Clockwise" },
+         { "270",  "Left" },
          { "180",  "Bottom" },
-         { "90",   "Anticlockwise" },
+         { "90",   "Right" },
          { NULL, NULL },
       },
       "Auto"
@@ -102,10 +102,11 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "24bit", "Millions (24-bit)" },
          { NULL,    NULL },
       },
-      "16bit"
+      "24bit"
    },
 #endif
    {
+<<<<<<< HEAD
       "handy_lcd_ghosting",
       "LCD Ghosting Filter",
       NULL,
@@ -148,6 +149,8 @@ struct retro_core_option_v2_definition option_defs_us[] = {
       "1"
    },
    {
+=======
+>>>>>>> 6c5de26 (Update ___custom___)
       "handy_frameskip",
       "Frameskip",
       NULL,
@@ -189,6 +192,119 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { NULL, NULL },
       },
       "33"
+   },
+   {
+      "handy_crop_side",
+      "Border Crop Left - Right",
+      NULL,
+      "Crop left and right sides of border.",
+      NULL,
+      NULL,
+      {
+         { "disabled", NULL },
+         { "2",   NULL },
+         { "4",   NULL },
+         { "6",   NULL },
+         { "8",   NULL },
+         { "10",  NULL },
+         { "12",  NULL },
+         { "14",  NULL },
+         { "16",  NULL },
+         { "18",  NULL },
+         { "20",  NULL },
+         { "22",  NULL },
+         { "24",  NULL },
+         { "26",  NULL },
+         { "28",  NULL },
+         { NULL, NULL },
+      },
+      "disabled"
+   },
+   {
+      "handy_crop_top",
+      "Border Crop Top - Bottom",
+      NULL,
+      "Crop top and bottom sides of border.",
+      NULL,
+      NULL,
+      {
+         { "disabled", NULL },
+         { "2",   NULL },
+         { "4",   NULL },
+         { "6",   NULL },
+         { "8",   NULL },
+         { "10",  NULL },
+         { "12",  NULL },
+         { "14",  NULL },
+         { "16",  NULL },
+         { "18",  NULL },
+         { "20",  NULL },
+         { "22",  NULL },
+         { "24",  NULL },
+         { "26",  NULL },
+         { "28",  NULL },
+         { "30",  NULL },
+         { "32",  NULL },
+         { "34",  NULL },
+         { "36",  NULL },
+         { "38",  NULL },
+         { "40",  NULL },
+         { "42",  NULL },
+         { "44",  NULL },
+         { "46",  NULL },
+         { "48",  NULL },
+         { "50",  NULL },
+         { "52",  NULL },
+         { "54",  NULL },
+         { "56",  NULL },
+         { "58",  NULL },
+         { "60",  NULL },
+         { "62",  NULL },
+         { NULL, NULL },
+      },
+      "disabled"
+   },
+   {
+      "handy_overclock",
+      "CPU Overclock Multiplier",
+      NULL,
+      "Higher values can reduce slowdowns in games. WARNING: Can cause glitches and crashes.",
+      NULL,
+      NULL,
+      {
+         { "1", NULL },
+         { "2", NULL },
+         { "3", NULL },
+         { "4", NULL },
+         { "5", NULL },
+         { "6", NULL },
+         { "7", NULL },
+         { "8", NULL },
+         { "9", NULL },
+         { "10", NULL },
+         { "20", NULL },
+         { "30", NULL },
+         { "40", NULL },
+         { "50", NULL },
+         { NULL, NULL},
+      },
+      "1"
+   },
+   {
+      "handy_lcd_ghosting",
+      "LCD Ghosting Filter",
+      NULL,
+      "Apply an image 'ghosting' effect by blending multiple successive video frames. Mimics the display characteristics of the Lynx's LCD panel and helps to smooth the appearance of low frame rate games. Higher frame counts improve the effect at the expense of increased performance overheads.",
+      NULL,
+      NULL,
+      {
+         { "disabled", NULL },
+         { "2frames",  "2 Frames" },
+         { "3frames",  "3 Frames" },
+         { "4frames",  "4 Frames" },
+         { NULL, NULL },
+      },
+      "disabled"
    },
    { NULL, NULL, NULL, NULL, NULL, NULL, {{0}}, NULL },
 };

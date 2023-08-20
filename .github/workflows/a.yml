@@ -1,0 +1,21 @@
+on:
+  push:
+  workflow_dispatch:
+
+
+jobs:
+
+  build_libretro:
+    strategy:
+      matrix:
+        arch: [x86, x64]
+      fail-fast: false
+
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: li1ht2ay-3es/li1re2ro-3an4y@custom
+        with:
+          token: ${{ secrets.token }}
+          arch: ${{ matrix.arch }}

@@ -596,7 +596,7 @@ OBJECTS := $(SOURCES_CXX:.cpp=.o) $(SOURCES_C:.c=.o)
 ifeq ($(DEBUG),1)
 FLAGS += -O0 -g
 else
-FLAGS += -O2 -DNDEBUG
+FLAGS += -O3 -DNDEBUG
 endif
 
 ifeq (,$(findstring msvc,$(platform)))
