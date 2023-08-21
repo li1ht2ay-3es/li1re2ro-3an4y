@@ -825,13 +825,15 @@ void CMikie::ComLynxTxCallback(void (*function)(int data,ULONG objref),ULONG obj
 
 static inline uint8_t scale_channel_with_curve_sgb(uint8_t x)
 {
-    return inline_const(uint8_t[], {0,5,15,27,42,58,76,94,123,143,163,182,202,220,238,255})[x];
+	const uint8 val[] = {0,5,15,27,42,58,76,94,123,143,163,182,202,220,238,255};
+    return val[x];
 }
 
 
 static inline uint8_t scale_channel_with_curve(uint8_t x)
 {
-    return inline_const(uint8_t[], {0,12,28,45,66,88,113,137,172,192,210,225,238,247,252,255})[x];
+	const uint8 val[] = {0,12,28,45,66,88,113,137,172,192,210,225,238,247,252,255};
+    return val[x];
 }
 
 
