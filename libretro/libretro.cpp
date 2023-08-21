@@ -150,11 +150,7 @@ static bool update_audio_latency           = false;
 
 static bool libretro_supports_option_categories = false;
 
-<<<<<<< HEAD
 static unsigned retro_overclock = 1;
-=======
-static unsigned retro_overclock = 0;
->>>>>>> 6c5de26 (Update ___custom___)
 
 static void retro_audio_buff_status_cb(
       bool active, unsigned occupancy, bool underrun_likely)
@@ -902,8 +898,6 @@ static void check_variables(void)
    if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value) {
       retro_overclock = atoi(var.value);
    }
-<<<<<<< HEAD
-=======
 
    old_value             = lynx_width_crop;
    var.key               = "handy_crop_side";
@@ -926,7 +920,6 @@ static void check_variables(void)
       else
          lynx_height_crop = RETRO_LYNX_HEIGHT_BORDER - RETRO_LYNX_HEIGHT - atoi(var.value);
    }
->>>>>>> 6c5de26 (Update ___custom___)
 }
 
 void retro_init(void)
