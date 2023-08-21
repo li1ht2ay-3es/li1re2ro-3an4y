@@ -823,6 +823,18 @@ void CMikie::ComLynxTxCallback(void (*function)(int data,ULONG objref),ULONG obj
 }
 
 
+static inline uint8_t scale_channel_with_curve_sgb(uint8_t x)
+{
+    return inline_const(uint8_t[], {0,5,15,27,42,58,76,94,123,143,163,182,202,220,238,255})[x];
+}
+
+
+static inline uint8_t scale_channel_with_curve(uint8_t x)
+{
+    return inline_const(uint8_t[], {0,12,28,45,66,88,113,137,172,192,210,225,238,247,252,255})[x];
+}
+
+
 void CMikie::DisplaySetAttributes(ULONG Rotate,ULONG Format,ULONG Pitch,UBYTE* (*RenderCallback)(ULONG objref),ULONG objref)
 {
    mDisplayRotate=Rotate;
@@ -876,9 +888,15 @@ void CMikie::DisplaySetAttributes(ULONG Rotate,ULONG Format,ULONG Pitch,UBYTE* (
       case MIKIE_PIXEL_FORMAT_24BPP:
       case MIKIE_PIXEL_FORMAT_32BPP:
          for(Spot.Index=0;Spot.Index<4096;Spot.Index++) {
-            mColourMap[Spot.Index]=((Spot.Colours.Red<<20)&0x00f00000) | ((Spot.Colours.Red<<16)&0x000f0000);
-            mColourMap[Spot.Index]|=((Spot.Colours.Green<<12)&0x0000f000) | ((Spot.Colours.Green<<8)&0x00000f00);
-            mColourMap[Spot.Index]|=((Spot.Colours.Blue<<4)&0x000000f0) | ((Spot.Colours.Blue<<0)&0x0000000f);
+            unsigned red, green, blue;
+
+            red	= scale_channel_with_curve(Spot.Colours.Red);
+            green = scale_channel_with_curve(Spot.Colours.Green);
+            blue = scale_channel_with_curve(Spot.Colours.Blue);
+
+            mColourMap[Spot.Index]=((red<<20)&0x00f00000) | ((red<<16)&0x000f0000);
+            mColourMap[Spot.Index]|=((green<<12)&0x0000f000) | ((green<<8)&0x00000f00);
+            mColourMap[Spot.Index]|=((blue<<4)&0x000000f0) | ((blue<<0)&0x0000000f);
          }
          break;
       default:
