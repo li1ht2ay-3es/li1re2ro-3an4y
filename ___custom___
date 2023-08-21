@@ -1,6 +1,5 @@
 Core
 - 384 KHz audio  [frontend interpolation = extra low latency]
-- CPU overclocking  [per cycle, not scanline]
 - No blip interpolation  [remove fuzzy linear]
 
 
