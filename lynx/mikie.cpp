@@ -894,9 +894,15 @@ void CMikie::DisplaySetAttributes(ULONG Rotate,ULONG Format,ULONG Pitch,UBYTE* (
             green = scale_channel_with_curve(Spot.Colours.Green);
             blue = scale_channel_with_curve(Spot.Colours.Blue);
 
+#if 0
             mColourMap[Spot.Index]=((red<<20)&0x00f00000) | ((red<<16)&0x000f0000);
             mColourMap[Spot.Index]|=((green<<12)&0x0000f000) | ((green<<8)&0x00000f00);
             mColourMap[Spot.Index]|=((blue<<4)&0x000000f0) | ((blue<<0)&0x0000000f);
+#else
+            mColourMap[Spot.Index]=(red<<16);
+            mColourMap[Spot.Index]|=(green<<8);
+            mColourMap[Spot.Index]|=(blue<<0);
+#endif
          }
          break;
       default:
