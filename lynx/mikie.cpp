@@ -1443,9 +1443,9 @@ ULONG CMikie::DisplayEndOfFrame(void)
    return 0;
 }
 
-void	CMikie::AudioEndOfFrame(void)
+void CMikie::AudioEndOfFrame(void)
 {
-   mikbuf.end_frame(gSystemCycleCount - gAudioLastUpdateCycle);
+   mikbuf.end_frame(gSystemCycleCount - gAudioLastUpdateCycle, true);
    gAudioBufferPointer = mikbuf.read_samples((blip_sample_t*) gAudioBuffer, HANDY_AUDIO_BUFFER_SIZE / 2);
    gAudioLastUpdateCycle = gSystemCycleCount;
 }
