@@ -14,8 +14,48 @@ jobs:
 
     runs-on: ubuntu-latest
 
+
     steps:
-      - uses: li1ht2ay-3es/li1re2ro-3an4y@custom
-        with:
-          token: ${{ secrets.token }}
-          arch: ${{ matrix.arch }}
+
+    - uses: li1ht2ay-3es/gi1-ac2io3s@checkout-repo
+      with:
+        token: ${{ secrets.token }}
+        auto: true
+
+
+    - uses: li1ht2ay-3es/gi1-ac2io3s@mingw-install
+      with:
+        arch: ${{ matrix.arch }}
+
+
+    - uses: hendrikmuhs/ccache-action@main
+      with:
+        key: ${{ matrix.arch }}
+
+
+    - shell: bash
+      run: |
+        merge () {
+          echo "<<< ===  merging  $1  === >>>";
+          if [[ -z "$2" ]]; then
+            git merge origin/$1 || { git diff --diff-filter=U; exit 1; }
+          else
+            git merge origin/$1 || { git diff --diff-filter=U; git merge --abort; git merge -X $2 origin/$1; }
+          fi
+          echo "";
+        }
+
+
+    - shell: bash
+      env:
+        CC: ccache ${{ env.MINGW_CC }}
+        CXX: ccache ${{ env.MINGW_CXX }}
+      run: |
+        $CXX --verbose
+        make platform="win"
+
+
+    - uses: actions/upload-artifact@main
+      with:
+        name: handy_libretro_${{ matrix.arch }}
+        path: ${{ github.workspace }}/**.dll
