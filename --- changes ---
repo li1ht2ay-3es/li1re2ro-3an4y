@@ -1,6 +1,7 @@
 Core
 - 384 KHz audio  [use frontend interpolation = extra low latency]
 - Blip interpolation removed  [less fuzzy]
+- Blip stereo playback fix
 
 
 Libretro
