@@ -1,8 +1,0 @@
-Core
-- 384 KHz audio  [frontend interpolation = extra low latency]
-- No blip interpolation  [remove fuzzy linear]
-
-
-Libretro
-- Handheld border  [smaller game window stretch]
-- O3 compile  [faster]

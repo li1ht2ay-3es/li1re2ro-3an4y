@@ -1,0 +1,12 @@
+Core
+- 384 KHz audio  [use frontend interpolation = extra low latency]
+- Blip interpolation removed  [less fuzzy]
+
+
+Libretro
+- Border skin added
+- O3 compile
+
+
+Compiler
+- Ternary () guards  [mingw32-gcc-posix parsing error, creates lots of mystery bugs]
