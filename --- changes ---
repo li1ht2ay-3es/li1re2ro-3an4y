@@ -7,7 +7,7 @@ Core
 Libretro
 - Border skin added
 - O3 compile
-- Video colour ramp  [cgb curve, non-linear = brighter and darker]
+- Video colour ramp  [cgb curve, non-linear = mostly brighter]
 
 
 Compiler
