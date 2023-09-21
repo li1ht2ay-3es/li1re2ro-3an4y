@@ -825,17 +825,11 @@ void CMikie::ComLynxTxCallback(void (*function)(int data,ULONG objref),ULONG obj
 
 static inline uint8_t scale_channel_with_curve(uint8_t x)
 {
-	//return inline_const(uint8_t[], {0,6,12,20,28,36,45,56,66,76,88,100,113,125,137,149,161,172,182,192,202,210,218,225,232,238,243,247,250,252,254,255})[x];
-	const uint8_t val[] = {0,12,28,45,66,88,113,137,172,192,210,225,238,247,252,255};
-    return val[x];
-}
+	const uint8_t val[] = {0,6,12,20,28,36,45,56,66,76,88,100,113,125,137,149,161,172,182,192,202,210,218,225,232,238,243,247,250,252,254,255};
 
-
-static inline uint8_t scale_channel_with_curve_sgb(uint8_t x)
-{
-	//return inline_const(uint8_t[], {0,2,5,9,15,20,27,34,42,50,58,67,76,85,94,104,114,123,133,143,153,163,173,182,192,202,211,220,229,238,247,255})[x];
-	const uint8_t val[] = {0,5,15,27,42,58,76,94,123,143,163,182,202,220,238,255};
-    return val[x];
+	// 31.0 / 7.0
+	if(x < 8) return val[x*2+0];
+	if(x < 16) return val[x*2+1];
 }
 
 
