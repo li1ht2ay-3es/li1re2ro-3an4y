@@ -1,5 +1,6 @@
 Core
 - 384 KHz audio  [use frontend interpolation = extra low latency]
+- Audio buffer increased  [384K audio]
 - Blip interpolation removed  [less fuzzy]
 - Blip stereo read buffer fix
 - LCD gamma ramp  [cgb curve = mostly brighter; not correct though]
