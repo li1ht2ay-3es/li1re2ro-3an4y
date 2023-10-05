@@ -326,12 +326,12 @@ blip_inline void Blip_Synth<quality,range>::offset_resampled( blip_resampled_tim
 	blip_long* BLIP_RESTRICT buf = blip_buf->buffer_ + (time >> BLIP_BUFFER_ACCURACY);
 	int phase = (int) (time >> (BLIP_BUFFER_ACCURACY - BLIP_PHASE_BITS) & (blip_res - 1));
 
-	blip_long left = buf [0] + delta;
-
 	// no linear interpolation = raw sample
-	buf [0] = left;
+	buf [0] += delta;
 	buf [1] = 0;
 	return;
+
+	blip_long left = buf [0] + delta;
 	
 	// Kind of crappy, but doing shift after multiply results in overflow.
 	// Alternate way of delaying multiply by delta_factor results in worse
