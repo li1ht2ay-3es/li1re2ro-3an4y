@@ -330,6 +330,7 @@ blip_inline void Blip_Synth<quality,range>::offset_resampled( blip_resampled_tim
 
 	// no linear interpolation = raw sample
 	buf [0] = left;
+	buf [1] = 0;
 	return;
 	
 	// Kind of crappy, but doing shift after multiply results in overflow.
