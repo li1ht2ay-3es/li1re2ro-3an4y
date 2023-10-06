@@ -27,6 +27,13 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA */
 	#define ULLONG_MAX (__LONG_LONG_MAX__ * 2ULL + 1)
 #endif
 
+#define CLAMP(x) \
+(
+	((x) > +32767) ? +32767 :
+	((x) < -32768) ? -32768 :
+	(x)
+)
+
 Blip_Buffer::Blip_Buffer()
 {
 	factor_       = (blip_u64)ULLONG_MAX;
@@ -207,9 +214,9 @@ long Blip_Buffer::read_samples( blip_sample_t* BLIP_RESTRICT out, long max_sampl
 			for ( blip_long n = count; n; --n )
 			{
 				blip_long s = BLIP_READER_READ( reader );
-				if ( (blip_sample_t) s != s )
-					s = 0x7FFF - (s >> 24);
-				*out++ = (blip_sample_t) s;
+				//if ( (blip_sample_t) s != s )
+					//s = 0x7FFF - (s >> 24);
+				*out++ = (blip_sample_t) CLAMP(s);
 				BLIP_READER_NEXT( reader, bass );
 			}
 		}
@@ -219,9 +226,9 @@ long Blip_Buffer::read_samples( blip_sample_t* BLIP_RESTRICT out, long max_sampl
 			for ( blip_long n = count; n; --n )
 			{
 				blip_long s = BLIP_READER_READ( reader );
-				if ( (blip_sample_t) s != s )
-					s = 0x7FFF - (s >> 24);
-				*out = (blip_sample_t) s;
+				//if ( (blip_sample_t) s != s )
+					//s = 0x7FFF - (s >> 24);
+				*out = (blip_sample_t) CLAMP(s);
 				out += 2;
 				BLIP_READER_NEXT( reader, bass );
 			}
