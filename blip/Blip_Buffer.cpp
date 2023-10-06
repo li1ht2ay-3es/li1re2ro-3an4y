@@ -28,10 +28,10 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA */
 #endif
 
 #define CLAMP(x) \
-(
-	((x) > +32767) ? +32767 :
-	((x) < -32768) ? -32768 :
-	(x)
+( \
+	((x) > +32767) ? +32767 : \
+	((x) < -32768) ? -32768 : \
+	(x) \
 )
 
 Blip_Buffer::Blip_Buffer()
