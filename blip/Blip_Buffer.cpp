@@ -214,9 +214,8 @@ long Blip_Buffer::read_samples( blip_sample_t* BLIP_RESTRICT out, long max_sampl
 			for ( blip_long n = count; n; --n )
 			{
 				blip_long s = BLIP_READER_READ( reader );
-				//if ( (blip_sample_t) s != s )
-					//s = 0x7FFF - (s >> 24);
-				*out++ = (blip_sample_t) CLAMP(s);
+				if ( (blip_sample_t) s != s )
+					s = 0x7FFF - (s >> 24);
 				BLIP_READER_NEXT( reader, bass );
 			}
 		}
@@ -226,9 +225,8 @@ long Blip_Buffer::read_samples( blip_sample_t* BLIP_RESTRICT out, long max_sampl
 			for ( blip_long n = count; n; --n )
 			{
 				blip_long s = BLIP_READER_READ( reader );
-				//if ( (blip_sample_t) s != s )
-					//s = 0x7FFF - (s >> 24);
-				*out = (blip_sample_t) CLAMP(s);
+				if ( (blip_sample_t) s != s )
+					s = 0x7FFF - (s >> 24);
 				out += 2;
 				BLIP_READER_NEXT( reader, bass );
 			}

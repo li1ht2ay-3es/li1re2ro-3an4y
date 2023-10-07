@@ -132,7 +132,7 @@ private:
 #endif
 
 #define BLIP_BUFFER_ACCURACY 32
-#define BLIP_PHASE_BITS 8
+#define BLIP_PHASE_BITS 16
 
 // Number of bits in resample ratio fraction. Higher values give a more accurate ratio
 // but reduce maximum buffer size.
@@ -153,7 +153,7 @@ private:
 
 	// Internal
 	typedef blip_u64 blip_resampled_time_t;
-	int const blip_widest_impulse_ = 16;
+	int const blip_widest_impulse_ = 2;
 	int const blip_buffer_extra_ = blip_widest_impulse_ + 2;
 	int const blip_res = 1 << BLIP_PHASE_BITS;
 	class blip_eq_t;
@@ -232,7 +232,7 @@ public:
 	}
 	
 private:
-	Blip_Synth_Fast_ impl;
+	Blip_Synth_ impl;
 };
 
 // Low-pass equalization parameters
