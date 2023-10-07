@@ -86,7 +86,7 @@ void CMikie::BlowOut(void)
    for(loop=0;loop<16;loop++) mPalette[loop].Index=loop;
    for(loop=0;loop<4096;loop++) mColourMap[loop]=0;
 
-   mikbuf.set_sample_rate(HANDY_AUDIO_SAMPLE_FREQ, 60);
+   mikbuf.set_sample_rate(HANDY_AUDIO_SAMPLE_FREQ, 100);
    mikbuf.clock_rate(HANDY_SYSTEM_FREQ);
    mikbuf.bass_freq(0);
    miksynth.volume(1.0);
@@ -1444,7 +1444,7 @@ ULONG CMikie::DisplayEndOfFrame(void)
 void CMikie::AudioEndOfFrame(void)
 {
    mikbuf.end_frame(gSystemCycleCount - gAudioLastUpdateCycle, true);
-   gAudioBufferPointer = mikbuf.read_samples((blip_sample_t*) gAudioBuffer, HANDY_AUDIO_BUFFER_SIZE / 2);
+   gAudioBufferPointer = mikbuf.read_samples((blip_sample_t*) gAudioBuffer, HANDY_AUDIO_BUFFER_SIZE / 4);
    gAudioLastUpdateCycle = gSystemCycleCount;
 }
 
