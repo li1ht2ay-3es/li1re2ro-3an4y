@@ -167,6 +167,8 @@ enum
    MIKIE_PIXEL_FORMAT_32BPP,
 };
 
+#include <blip/Blip_Buffer.h>
+
 class CMikie : public CLynxBase
 {
    public:
