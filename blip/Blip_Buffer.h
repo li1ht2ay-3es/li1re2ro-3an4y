@@ -205,10 +205,13 @@ static INLINE void Blip_Synth_offset_resampled(
    // Fails if time is beyond end of Blip_Buffer, due to a bug in caller code or the
    // need for a longer buffer as set by set_sample_rate().
    delta *= synth->delta_factor;
-   buf = blip_buf->buffer + (time >>
-                                        BLIP_BUFFER_ACCURACY);
-   phase = (int)(time >> (BLIP_BUFFER_ACCURACY - BLIP_PHASE_BITS) &
-                     (blip_res - 1));
+   buf = blip_buf->buffer + (time >> BLIP_BUFFER_ACCURACY);
+   phase = (int)(time >> (BLIP_BUFFER_ACCURACY - BLIP_PHASE_BITS) & (blip_res - 1));
+
+   buf [0] += left;
+   buf [1] = 0;
+   return;
+
 
    left = buf [0] + delta;
 
