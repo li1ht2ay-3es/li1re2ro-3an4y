@@ -54,11 +54,6 @@
 #include "mikie.h"
 #include "lynxdef.h"
 #include "handy.h"
-#include "blip_buffer.h"
-
-
-static Blip_Buffer sbuf[2];
-static Blip_Synth Synth;
 
 
 void CMikie::BlowOut(void)
@@ -97,7 +92,7 @@ void CMikie::BlowOut(void)
 	  Blip_Buffer_set_clock_rate(&sbuf[y], HANDY_SYSTEM_FREQ);
 	  Blip_Buffer_bass_freq(&sbuf[y], 0);
    }
-   Blip_Synth_set_volume(&Synth, 1.0 / 4, 256 * 4);
+   Blip_Synth_set_volume(&synth, 1.0 / 4, 256 * 4);
 	
    Reset();
 }
@@ -3614,15 +3609,13 @@ inline void CMikie::UpdateSound(void)
    static int last_lsample = 0;
    static int last_rsample = 0;
 
-   Blip_Synth_offset(&Synth, timestamp, (samp[0] - ch->blip_prev_samp[0]) * ch->user_volume / 100, sbuf[0]);
-
    if(cur_lsample != last_lsample) {
-      miksynth.offset_inline(gSystemCycleCount - gAudioLastUpdateCycle, cur_lsample - last_lsample, mikbuf.left());
+      Blip_Synth_offset(&synth, gSystemCycleCount - gAudioLastUpdateCycle, cur_lsample - last_lsample, sbuf[0]);
       last_lsample = cur_lsample;
    }
 
    if(cur_rsample != last_rsample) {
-      miksynth.offset_inline(gSystemCycleCount - gAudioLastUpdateCycle, cur_rsample - last_rsample, mikbuf.right());
+      Blip_Synth_offset(&synth, gSystemCycleCount - gAudioLastUpdateCycle, cur_rsample - last_lsample, sbuf[1]);
       last_rsample = cur_rsample;
    }
 }

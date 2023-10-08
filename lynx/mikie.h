@@ -50,6 +50,8 @@
 #define MIKIE_H
 
 class CSystem;
+#include "blip_buffer.h"
+
 
 #define MIKIE_START	0xfd00
 #define MIKIE_SIZE	0x100
@@ -169,8 +171,8 @@ class CMikie : public CLynxBase
       CMikie(CSystem& parent);
       ~CMikie();
 
-      Synth miksynth;
-      Stereo_Buffer mikbuf;
+      Blip_Buffer sbuf[2];
+      Blip_Synth synth;
 
       bool	ContextSave(LSS_FILE *fp);
       bool	ContextLoad(LSS_FILE *fp);
