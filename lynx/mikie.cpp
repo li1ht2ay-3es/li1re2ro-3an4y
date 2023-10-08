@@ -3610,12 +3610,12 @@ inline void CMikie::UpdateSound(void)
    static int last_lsample = 0;
    static int last_rsample = 0;
 
-   if(cur_lsample != last_lsample) {
+   { //if(cur_lsample != last_lsample) {
       Blip_Synth_offset(&synth, gSystemCycleCount, cur_lsample - last_lsample, &sbuf[0]);
       last_lsample = cur_lsample;
    }
 
-   if(cur_rsample != last_rsample) {
+   { //if(cur_rsample != last_rsample) {
       Blip_Synth_offset(&synth, gSystemCycleCount, cur_rsample - last_lsample, &sbuf[1]);
       last_rsample = cur_rsample;
    }
