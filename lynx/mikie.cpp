@@ -92,7 +92,7 @@ void CMikie::BlowOut(void)
 	  Blip_Buffer_set_clock_rate(&sbuf[loop], HANDY_SYSTEM_FREQ);
 	  Blip_Buffer_bass_freq(&sbuf[loop], 0);
    }
-   Blip_Synth_set_volume(&synth, 1.0 / 4, 256 * 4);
+   Blip_Synth_set_volume(&synth, 1.0 / 4, 256 * 2);
 	
    Reset();
 }
@@ -1449,7 +1449,7 @@ void CMikie::AudioEndOfFrame(void)
    for( int y = 0; y < 2; y++ ) {
       Blip_Buffer_end_frame(&sbuf[y], gSystemCycleCount - gAudioLastUpdateCycle);
 
-      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], (blip_sample_t*)(gAudioBuffer + y*2), HANDY_AUDIO_BUFFER_SIZE / 2);
+      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], (blip_sample_t*)(gAudioBuffer + y*2), HANDY_AUDIO_BUFFER_SIZE / 4);
    }
    gAudioLastUpdateCycle = gSystemCycleCount;
 }
