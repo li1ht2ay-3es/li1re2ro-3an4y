@@ -757,8 +757,8 @@ bool CMikie::ContextLoad(LSS_FILE *fp)
    if(!lss_read(&mUART_PARITY_ENABLE,sizeof(ULONG),1,fp)) return 0;
    if(!lss_read(&mUART_PARITY_EVEN,sizeof(ULONG),1,fp)) return 0;
 
-   sbuf[0].clear();
-   sbuf[1].clear();
+   Blip_Buffer_clear(&sbuf[0], 1);
+   Blip_Buffer_clear(&sbuf[1], 1);
    return 1;
 }
 
@@ -1449,7 +1449,7 @@ void CMikie::AudioEndOfFrame(void)
    for( int y = 0; y < 2; y++ ) {
       Blip_Buffer_end_frame(&sbuf[y], gSystemCycleCount - gAudioLastUpdateCycle);
 
-      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], gAudioBuffer + y, HANDY_AUDIO_BUFFER_SIZE / 4);
+      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], (blip_sample_t*)gAudioBuffer + y, HANDY_AUDIO_BUFFER_SIZE / 4);
    }
    gAudioLastUpdateCycle = gSystemCycleCount;
 }
