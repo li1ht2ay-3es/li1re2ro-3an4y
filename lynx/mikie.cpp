@@ -88,9 +88,9 @@ void CMikie::BlowOut(void)
    for(loop=0;loop<4096;loop++) mColourMap[loop]=0;
 
    for(loop = 0; loop < 2; loop++) {
-      Blip_Buffer_set_sample_rate(&sbuf[y], HANDY_AUDIO_SAMPLE_FREQ, 50);
-	  Blip_Buffer_set_clock_rate(&sbuf[y], HANDY_SYSTEM_FREQ);
-	  Blip_Buffer_bass_freq(&sbuf[y], 0);
+      Blip_Buffer_set_sample_rate(&sbuf[loop], HANDY_AUDIO_SAMPLE_FREQ, 50);
+	  Blip_Buffer_set_clock_rate(&sbuf[loop], HANDY_SYSTEM_FREQ);
+	  Blip_Buffer_bass_freq(&sbuf[loop], 0);
    }
    Blip_Synth_set_volume(&synth, 1.0 / 4, 256 * 4);
 	
@@ -757,7 +757,8 @@ bool CMikie::ContextLoad(LSS_FILE *fp)
    if(!lss_read(&mUART_PARITY_ENABLE,sizeof(ULONG),1,fp)) return 0;
    if(!lss_read(&mUART_PARITY_EVEN,sizeof(ULONG),1,fp)) return 0;
 
-   mikbuf.clear();
+   sbuf[0].clear();
+   sbuf[1].clear();
    return 1;
 }
 
@@ -1448,7 +1449,7 @@ void CMikie::AudioEndOfFrame(void)
    for( int y = 0; y < 2; y++ ) {
       Blip_Buffer_end_frame(&sbuf[y], gSystemCycleCount - gAudioLastUpdateCycle);
 
-      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], gAudioBuffer + y, HANDY_AUDIO_BUFFER_SIZE / 4fs);
+      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], gAudioBuffer + y, HANDY_AUDIO_BUFFER_SIZE / 4);
    }
    gAudioLastUpdateCycle = gSystemCycleCount;
 }
@@ -3610,12 +3611,12 @@ inline void CMikie::UpdateSound(void)
    static int last_rsample = 0;
 
    if(cur_lsample != last_lsample) {
-      Blip_Synth_offset(&synth, gSystemCycleCount - gAudioLastUpdateCycle, cur_lsample - last_lsample, sbuf[0]);
+      Blip_Synth_offset(&synth, gSystemCycleCount - gAudioLastUpdateCycle, cur_lsample - last_lsample, &sbuf[0]);
       last_lsample = cur_lsample;
    }
 
    if(cur_rsample != last_rsample) {
-      Blip_Synth_offset(&synth, gSystemCycleCount - gAudioLastUpdateCycle, cur_rsample - last_lsample, sbuf[1]);
+      Blip_Synth_offset(&synth, gSystemCycleCount - gAudioLastUpdateCycle, cur_rsample - last_lsample, &sbuf[1]);
       last_rsample = cur_rsample;
    }
 }

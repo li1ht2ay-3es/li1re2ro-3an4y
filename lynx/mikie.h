@@ -51,6 +51,7 @@
 
 class CSystem;
 
+
 #define MIKIE_START	0xfd00
 #define MIKIE_SIZE	0x100
 
