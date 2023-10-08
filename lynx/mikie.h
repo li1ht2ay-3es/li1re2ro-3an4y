@@ -50,7 +50,7 @@
 #define MIKIE_H
 
 class CSystem;
-#include "blip\blip_buffer.h"
+#include <blip/blip_buffer.h>
 
 
 #define MIKIE_START	0xfd00
