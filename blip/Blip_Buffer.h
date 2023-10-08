@@ -208,7 +208,9 @@ static INLINE void Blip_Synth_offset_resampled(
    buf = blip_buf->buffer + (time >> BLIP_BUFFER_ACCURACY);
    phase = (int)(time >> (BLIP_BUFFER_ACCURACY - BLIP_PHASE_BITS) & (blip_res - 1));
 
-   buf [0] += left;
+
+   // no linear interpolation
+   buf [0] += delta;
    buf [1] = 0;
    return;
 
