@@ -1447,9 +1447,9 @@ ULONG CMikie::DisplayEndOfFrame(void)
 void CMikie::AudioEndOfFrame(void)
 {
    for( int y = 0; y < 2; y++ ) {
-      Blip_Buffer_end_frame(&sbuf[y], gSystemCycleCount);
+      Blip_Buffer_end_frame(&sbuf[y], gSystemCycleCount - gAudioLastUpdateCycle);
 
-      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], (blip_sample_t*)(gAudioBuffer + y*2), HANDY_AUDIO_BUFFER_SIZE / 4);
+      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], (blip_sample_t*)(gAudioBuffer + y), HANDY_AUDIO_BUFFER_SIZE / 4);
    }
    gAudioLastUpdateCycle = gSystemCycleCount;
 }
@@ -3610,13 +3610,13 @@ inline void CMikie::UpdateSound(void)
    static int last_lsample = 0;
    static int last_rsample = 0;
 
-   { //if(cur_lsample != last_lsample) {
-      Blip_Synth_offset(&synth, gSystemCycleCount, cur_lsample - last_lsample, &sbuf[0]);
+   if(cur_lsample != last_lsample) {
+      Blip_Synth_offset(&synth, gSystemCycleCount - gAudioLastUpdateCycle, cur_lsample - last_lsample, &sbuf[0]);
       last_lsample = cur_lsample;
    }
 
-   { //if(cur_rsample != last_rsample) {
-      Blip_Synth_offset(&synth, gSystemCycleCount, cur_rsample - last_lsample, &sbuf[1]);
+   if(cur_rsample != last_rsample) {
+      Blip_Synth_offset(&synth, gSystemCycleCount - gAudioLastUpdateCycle, cur_rsample - last_lsample, &sbuf[1]);
       last_rsample = cur_rsample;
    }
 }
