@@ -163,10 +163,6 @@ enum
    MIKIE_PIXEL_FORMAT_32BPP,
 };
 
-#include <blip/Stereo_Buffer.h>
-
-typedef Blip_Synth<blip_high_quality, 256 * 4 * 2> Synth;
-
 class CMikie : public CLynxBase
 {
    public:
