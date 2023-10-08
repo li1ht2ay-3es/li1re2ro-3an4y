@@ -54,6 +54,12 @@
 #include "mikie.h"
 #include "lynxdef.h"
 #include "handy.h"
+#include "blip_buffer.h"
+
+
+static Blip_Buffer sbuf[2];
+static Blip_Synth Synth;
+
 
 void CMikie::BlowOut(void)
 {
@@ -86,11 +92,12 @@ void CMikie::BlowOut(void)
    for(loop=0;loop<16;loop++) mPalette[loop].Index=loop;
    for(loop=0;loop<4096;loop++) mColourMap[loop]=0;
 
-   mikbuf.set_sample_rate(HANDY_AUDIO_SAMPLE_FREQ, 100);
-   mikbuf.clock_rate(HANDY_SYSTEM_FREQ);
-   mikbuf.bass_freq(0);
-   miksynth.volume(1.0);
-   miksynth.treble_eq(0);
+   for(loop = 0; loop < 2; loop++) {
+      Blip_Buffer_set_sample_rate(&sbuf[y], HANDY_AUDIO_SAMPLE_FREQ, 50);
+	  Blip_Buffer_set_clock_rate(&sbuf[y], HANDY_SYSTEM_FREQ);
+	  Blip_Buffer_bass_freq(&sbuf[y], 0);
+   }
+   Blip_Synth_set_volume(&Synth, 1.0 / 4, 256 * 4);
 	
    Reset();
 }
@@ -1443,8 +1450,11 @@ ULONG CMikie::DisplayEndOfFrame(void)
 
 void CMikie::AudioEndOfFrame(void)
 {
-   mikbuf.end_frame(gSystemCycleCount - gAudioLastUpdateCycle, true);
-   gAudioBufferPointer = mikbuf.read_samples((blip_sample_t*) gAudioBuffer, HANDY_AUDIO_BUFFER_SIZE / 4);
+   for( int y = 0; y < 2; y++ ) {
+      Blip_Buffer_end_frame(&sbuf[y], gSystemCycleCount - gAudioLastUpdateCycle);
+
+      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], gAudioBuffer + y, HANDY_AUDIO_BUFFER_SIZE / 4fs);
+   }
    gAudioLastUpdateCycle = gSystemCycleCount;
 }
 
@@ -3603,6 +3613,8 @@ inline void CMikie::UpdateSound(void)
 
    static int last_lsample = 0;
    static int last_rsample = 0;
+
+   Blip_Synth_offset(&Synth, timestamp, (samp[0] - ch->blip_prev_samp[0]) * ch->user_volume / 100, sbuf[0]);
 
    if(cur_lsample != last_lsample) {
       miksynth.offset_inline(gSystemCycleCount - gAudioLastUpdateCycle, cur_lsample - last_lsample, mikbuf.left());
