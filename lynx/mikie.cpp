@@ -1446,10 +1446,10 @@ ULONG CMikie::DisplayEndOfFrame(void)
 
 void CMikie::AudioEndOfFrame(void)
 {
-   for( int y = 1; y < 2; y++ ) {
+   for( int y = 0; y < 2; y++ ) {
       Blip_Buffer_end_frame(&sbuf[y], gSystemCycleCount - gAudioLastUpdateCycle);
 
-      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], (blip_sample_t*)(gAudioBuffer + 0*2), HANDY_AUDIO_BUFFER_SIZE / 4);
+      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], (blip_sample_t*)(gAudioBuffer + y*2), HANDY_AUDIO_BUFFER_SIZE / 4);
    }
    gAudioLastUpdateCycle = gSystemCycleCount;
 }
@@ -3616,7 +3616,7 @@ inline void CMikie::UpdateSound(void)
    }
 
    if(cur_rsample != last_rsample) {
-      Blip_Synth_offset(&synth, gSystemCycleCount - gAudioLastUpdateCycle, cur_rsample - last_lsample, &sbuf[1]);
+      Blip_Synth_offset(&synth, gSystemCycleCount - gAudioLastUpdateCycle, cur_rsample - last_rsample, &sbuf[1]);
       last_rsample = cur_rsample;
    }
 }
