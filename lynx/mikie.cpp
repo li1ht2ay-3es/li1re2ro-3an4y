@@ -1449,7 +1449,7 @@ void CMikie::AudioEndOfFrame(void)
    for( int y = 0; y < 2; y++ ) {
       Blip_Buffer_end_frame(&sbuf[y], gSystemCycleCount - gAudioLastUpdateCycle);
 
-      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], ((blip_sample_t*)gAudioBuffer) + y*2, HANDY_AUDIO_BUFFER_SIZE / 4);
+      gAudioBufferPointer = Blip_Buffer_read_samples(&sbuf[y], (blip_sample_t*)(gAudioBuffer + y*2), HANDY_AUDIO_BUFFER_SIZE / 2);
    }
    gAudioLastUpdateCycle = gSystemCycleCount;
 }
