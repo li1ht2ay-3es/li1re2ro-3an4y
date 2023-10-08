@@ -1165,8 +1165,7 @@ void retro_run(void)
 
    lynx->FetchAudioSamples();
 
-   /* Divide gAudioBufferPointer by number of 16-bit channels */
-   audio_batch_cb(soundBuffer, gAudioBufferPointer/2);
+   audio_batch_cb(soundBuffer, gAudioBufferPointer);
    gAudioBufferPointer = 0;
 }
 
