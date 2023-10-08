@@ -12,6 +12,11 @@
 extern "C" {
 #endif
 
+#ifdef __GNUC__
+#define INLINE inline
+#else
+#define INLINE
+#endif
 
 // Internal
 typedef int32_t blip_long;
